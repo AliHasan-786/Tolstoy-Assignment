@@ -20,6 +20,13 @@ Open `http://localhost:3000`.
 
 ## LLM setup
 
+Signal has two runtime modes:
+
+- **Live mode:** set an LLM key and the server routes call the model in real time.
+- **Demo mode:** leave keys unset and the same workflows return realistic mock output.
+
+The UI uses the included sample dataset in both modes. The difference is whether the analysis and generation are produced by the live model or by the fallback response.
+
 Create `.env.local`:
 
 ```bash

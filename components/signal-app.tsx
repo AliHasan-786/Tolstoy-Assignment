@@ -9,7 +9,6 @@ import {
   FlaskConical,
   Loader2,
   LockKeyhole,
-  Sparkles,
   TrendingUp,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -54,7 +53,8 @@ export function SignalApp() {
   const [activeTab, setActiveTab] = useState<Tab>("loop");
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-7 px-4 py-5 sm:px-6 sm:py-8 lg:px-8">
+    <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-8 px-4 py-5 sm:px-6 sm:py-7 lg:px-8">
+      <TopBar />
       <Hero />
       <TabSwitcher activeTab={activeTab} onChange={setActiveTab} />
       <AnimatePresence mode="wait">
@@ -84,41 +84,72 @@ export function SignalApp() {
   );
 }
 
+function TopBar() {
+  return (
+    <header className="flex min-h-12 items-center justify-between border-b border-[var(--line)] pb-4">
+      <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1" aria-hidden="true">
+          <span className="h-3.5 w-3.5 rounded-full bg-black" />
+          <span className="h-3.5 w-3.5 rounded-full bg-black" />
+        </div>
+        <span className="text-xl font-bold leading-none text-[var(--ink)]">
+          Signal
+        </span>
+      </div>
+      <div className="hidden items-center gap-2 sm:flex">
+        <span className="rounded-full bg-[var(--gray-soft)] px-4 py-2 text-sm font-medium text-[var(--ink)]">
+          Prototype · sample data
+        </span>
+      </div>
+    </header>
+  );
+}
+
 function Hero() {
   return (
-    <section className="relative overflow-hidden rounded-[1.4rem] border border-[var(--line)] bg-[var(--paper)] p-5 shadow-[var(--shadow)] sm:p-8">
-      <div className="absolute inset-y-0 right-0 hidden w-1/3 border-l border-[var(--line)] bg-[linear-gradient(135deg,rgba(157,89,68,0.14),rgba(102,119,101,0.16))] md:block" />
-      <div className="relative flex flex-col justify-between gap-6 md:flex-row md:items-end">
+    <section className="pt-8 sm:pt-12">
+      <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
         <div className="max-w-3xl">
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[rgba(157,89,68,0.24)] bg-[rgba(157,89,68,0.08)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--clay-dark)]">
-            <Sparkles size={14} />
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-[var(--gray-soft)] px-4 py-2 text-sm font-medium text-[var(--ink)] sm:hidden">
             Prototype &middot; sample data
           </div>
-          <h1 className="display-font text-5xl font-semibold leading-none text-[var(--ink)] sm:text-6xl lg:text-7xl">
-            Signal
+          <h1 className="max-w-4xl text-5xl font-normal leading-[1.05] text-[var(--ink)] sm:text-6xl lg:text-[76px]">
+            Measure sales signals before you make more content.
           </h1>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--muted)] sm:text-lg">
+          <p className="mt-5 max-w-2xl text-lg leading-7 text-[var(--ink)] sm:text-xl">
             Measure what content drives sales, then generate more of what works,
             on-brand.
           </p>
         </div>
-        <div className="grid grid-cols-3 gap-2 rounded-2xl border border-[var(--line)] bg-[rgba(255,250,243,0.72)] p-2 backdrop-blur sm:min-w-[320px]">
-          <StatTile label="Assets" value="14" />
-          <StatTile label="Sales" value="4.7k" />
-          <StatTile label="Revenue" value="$250k" />
+        <div className="grid w-full grid-cols-3 gap-3 md:max-w-[390px]">
+          <StatTile label="Assets" value="14" tone="lavender" />
+          <StatTile label="Sales" value="4.7k" tone="sky" />
+          <StatTile label="Revenue" value="$250k" tone="sage" />
         </div>
       </div>
     </section>
   );
 }
 
-function StatTile({ label, value }: { label: string; value: string }) {
+function StatTile({
+  label,
+  value,
+  tone,
+}: {
+  label: string;
+  value: string;
+  tone: "lavender" | "sky" | "sage";
+}) {
+  const toneClass = {
+    lavender: "bg-[var(--lavender)]",
+    sky: "bg-[var(--sky-soft)]",
+    sage: "bg-[var(--sage-soft)]",
+  }[tone];
+
   return (
-    <div className="rounded-xl border border-[rgba(223,211,197,0.76)] bg-white/55 px-3 py-3">
-      <div className="text-[11px] uppercase text-[var(--muted)]">{label}</div>
-      <div className="display-font mt-1 text-2xl font-semibold text-[var(--plum)]">
-        {value}
-      </div>
+    <div className={clsx("rounded-2xl border border-[var(--line)] px-4 py-4", toneClass)}>
+      <div className="text-xs font-medium text-[var(--muted)]">{label}</div>
+      <div className="mt-1 text-2xl font-semibold text-[var(--ink)]">{value}</div>
     </div>
   );
 }
@@ -131,14 +162,14 @@ function TabSwitcher({
   onChange: (tab: Tab) => void;
 }) {
   return (
-    <div className="grid rounded-2xl border border-[var(--line)] bg-[rgba(255,250,243,0.72)] p-1 shadow-sm sm:w-fit sm:grid-cols-2">
+    <div className="grid rounded-full border border-[var(--line)] bg-[var(--gray-soft)] p-1 sm:w-fit sm:grid-cols-2">
       <button
         type="button"
         onClick={() => onChange("loop")}
         className={clsx(
-          "flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition",
+          "flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition",
           activeTab === "loop"
-            ? "bg-[var(--ink)] text-white shadow-sm"
+            ? "bg-black text-white"
             : "text-[var(--muted)] hover:text-[var(--ink)]",
         )}
       >
@@ -149,9 +180,9 @@ function TabSwitcher({
         type="button"
         onClick={() => onChange("engine")}
         className={clsx(
-          "flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition",
+          "flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition",
           activeTab === "engine"
-            ? "bg-[var(--ink)] text-white shadow-sm"
+            ? "bg-black text-white"
             : "text-[var(--muted)] hover:text-[var(--ink)]",
         )}
       >
@@ -207,7 +238,7 @@ function LoopTab() {
         }
       />
 
-      <div className="grid gap-5 xl:grid-cols-[1.25fr_0.75fr]">
+      <div className="grid min-w-0 gap-5 xl:grid-cols-[1.25fr_0.75fr]">
         <PerformanceTable />
         <RevenueChartPanel />
       </div>
@@ -279,7 +310,11 @@ function EngineTab() {
         title="Turn a proven winner into new on-brand variations, with a guardrail."
         action={
           <PrimaryButton onClick={generate} disabled={loading}>
-            {loading ? <Loader2 className="animate-spin" size={18} /> : <Sparkles size={18} />}
+            {loading ? (
+              <Loader2 className="animate-spin" size={18} />
+            ) : (
+              <FlaskConical size={18} />
+            )}
             Generate variations
           </PrimaryButton>
         }
@@ -320,12 +355,12 @@ function SectionHeader({
   action: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-4 rounded-2xl border border-[var(--line)] bg-[var(--paper)] p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-6">
+    <div className="flex flex-col gap-4 rounded-2xl border border-[var(--line)] bg-[var(--gray-soft)] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
       <div>
-        <div className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--clay-dark)]">
+        <div className="text-sm font-medium text-[var(--muted)]">
           {eyebrow}
         </div>
-        <h2 className="display-font mt-2 max-w-3xl text-2xl font-semibold leading-tight text-[var(--ink)] sm:text-3xl">
+        <h2 className="mt-2 max-w-3xl text-3xl font-normal leading-tight text-[var(--ink)] sm:text-4xl">
           {title}
         </h2>
       </div>
@@ -348,7 +383,7 @@ function PrimaryButton({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[var(--clay)] px-5 py-3 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(157,89,68,0.22)] transition hover:bg-[var(--clay-dark)] disabled:opacity-60"
+      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-black px-5 py-3 text-sm font-medium text-white transition hover:bg-[var(--clay-dark)] disabled:opacity-60"
     >
       {children}
     </button>
@@ -361,10 +396,10 @@ function PerformanceTable() {
   );
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--paper)] shadow-sm">
+    <section className="min-w-0 overflow-hidden rounded-2xl border border-[var(--line)] bg-white">
       <div className="flex items-center justify-between gap-3 border-b border-[var(--line)] px-5 py-4">
         <div>
-          <h3 className="display-font text-2xl font-semibold">Performance overview</h3>
+          <h3 className="text-2xl font-medium">Performance overview</h3>
           <p className="mt-1 text-sm text-[var(--muted)]">
             Seed content assets with spend, sales, and revenue signals.
           </p>
@@ -375,7 +410,7 @@ function PerformanceTable() {
       </div>
       <div className="soft-scroll overflow-x-auto">
         <table className="min-w-[1060px] w-full border-collapse text-left text-sm">
-          <thead className="bg-[rgba(77,49,64,0.045)] text-[11px] uppercase tracking-[0.08em] text-[var(--muted)]">
+          <thead className="bg-[var(--gray-soft)] text-xs text-[var(--muted)]">
             <tr>
               <Th>Asset</Th>
               <Th>Format</Th>
@@ -398,7 +433,7 @@ function PerformanceTable() {
               return (
                 <tr
                   key={asset.id}
-                  className="border-t border-[rgba(223,211,197,0.72)]"
+                  className="border-t border-[var(--line)]"
                 >
                   <Td>
                     <div className="flex items-center gap-3">
@@ -424,9 +459,9 @@ function PerformanceTable() {
                   <Td align="right">{currency.format(asset.spend)}</Td>
                   <Td align="right">
                     <div className="flex min-w-32 items-center justify-end gap-3">
-                      <div className="h-2 w-20 rounded-full bg-[rgba(157,89,68,0.12)]">
+                      <div className="h-2 w-20 rounded-full bg-[var(--gray-soft)]">
                         <div
-                          className="h-2 rounded-full bg-[var(--clay)]"
+                          className="h-2 rounded-full bg-black"
                           style={{
                             width: `${Math.max(
                               8,
@@ -496,7 +531,7 @@ function Thumb({ asset }: { asset: ContentAsset }) {
   return (
     <div
       className={clsx(
-        "flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/70 text-xs font-bold uppercase shadow-sm",
+        "flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/70 text-xs font-bold ",
         tone,
       )}
     >
@@ -543,15 +578,14 @@ function RevenueChartPanel() {
   }, []);
 
   return (
-    <section className="rounded-2xl border border-[var(--line)] bg-[var(--paper)] p-5 shadow-sm">
+    <section className="min-w-0 rounded-2xl border border-[var(--line)] bg-[var(--sky-soft)] p-5">
       <div className="mb-5 flex items-start justify-between gap-3">
         <div>
-          <h3 className="display-font text-2xl font-semibold">Revenue rank</h3>
+          <h3 className="text-2xl font-medium">Revenue rank</h3>
           <p className="mt-1 text-sm text-[var(--muted)]">
             Top assets by attributed revenue.
           </p>
         </div>
-        <Badge tone="sage">ROAS visible</Badge>
       </div>
       <div ref={chartRef} className="h-[360px] w-full overflow-hidden">
         {mounted && chartWidth > 0 ? (
@@ -579,7 +613,7 @@ function RevenueChartPanel() {
               tick={{ fill: "var(--muted)", fontSize: 11 }}
             />
             <Tooltip
-              cursor={{ fill: "rgba(157,89,68,0.08)" }}
+              cursor={{ fill: "rgba(24,24,27,0.06)" }}
               formatter={(value, name) => [
                 name === "roas" ? `${value}x` : currency.format(Number(value)),
                 name === "roas" ? "ROAS" : "Revenue",
@@ -591,7 +625,7 @@ function RevenueChartPanel() {
                 boxShadow: "var(--shadow)",
               }}
             />
-            <Bar dataKey="revenue" radius={[0, 8, 8, 0]} fill="var(--clay)" />
+            <Bar dataKey="revenue" radius={[0, 8, 8, 0]} fill="var(--ink)" />
           </BarChart>
         ) : (
           <div className="h-full rounded-xl bg-[rgba(118,108,98,0.08)]" />
@@ -602,6 +636,12 @@ function RevenueChartPanel() {
 }
 
 function AnalysisResults({ result }: { result: AnalyzeApiResponse }) {
+  const cardTones = [
+    "bg-[var(--lavender)]",
+    "bg-[var(--sky-soft)]",
+    "bg-[var(--sage-soft)]",
+  ];
+
   return (
     <div className="space-y-5">
       <ModeIndicator result={result} />
@@ -612,10 +652,13 @@ function AnalysisResults({ result }: { result: AnalyzeApiResponse }) {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.04 }}
-            className="rounded-2xl border border-[var(--line)] bg-[var(--paper)] p-5 shadow-sm"
+            className={clsx(
+              "rounded-2xl border border-[var(--line)] p-5",
+              cardTones[index % cardTones.length],
+            )}
           >
             <div className="flex items-start justify-between gap-3">
-              <h3 className="display-font text-2xl font-semibold leading-tight">
+              <h3 className="text-2xl font-semibold leading-tight">
                 {item.element}
               </h3>
               <ConfidenceBadge confidence={item.confidence} />
@@ -630,13 +673,13 @@ function AnalysisResults({ result }: { result: AnalyzeApiResponse }) {
         ))}
       </div>
 
-      <section className="rounded-2xl border border-[var(--line)] bg-[var(--paper)] p-5 shadow-sm sm:p-6">
-        <h3 className="display-font text-2xl font-semibold">What to make next</h3>
+      <section className="rounded-2xl border border-[var(--line)] bg-white p-5 sm:p-6">
+        <h3 className="text-2xl font-medium">What to make next</h3>
         <div className="mt-5 grid gap-4">
           {result.next_priorities.map((priority, index) => (
             <div
               key={priority.priority}
-              className="grid gap-4 rounded-xl border border-[rgba(223,211,197,0.82)] bg-white/50 p-4 md:grid-cols-[48px_1fr]"
+              className="grid gap-4 rounded-xl border border-[var(--line)] bg-white p-4 md:grid-cols-[48px_1fr]"
             >
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--plum)] text-sm font-semibold text-white">
                 {index + 1}
@@ -660,13 +703,13 @@ function AnalysisResults({ result }: { result: AnalyzeApiResponse }) {
       </section>
 
       <section className="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="rounded-2xl border border-[var(--line)] bg-[rgba(255,250,243,0.72)] p-5 shadow-sm">
-          <h3 className="display-font text-2xl font-semibold">Excluded for low data</h3>
+        <div className="rounded-2xl border border-[var(--line)] bg-[var(--gray-soft)] p-5 ">
+          <h3 className="text-2xl font-semibold">Excluded for low data</h3>
           <div className="mt-4 space-y-3">
             {result.left_out_low_data.map((item) => (
               <div
                 key={item.asset}
-                className="rounded-xl border border-[var(--line)] bg-white/50 p-4"
+                className="rounded-xl border border-[var(--line)] bg-white p-4"
               >
                 <div className="font-semibold text-[var(--ink)]">{item.asset}</div>
                 <p className="mt-1 text-sm leading-6 text-[var(--muted)]">
@@ -676,8 +719,8 @@ function AnalysisResults({ result }: { result: AnalyzeApiResponse }) {
             ))}
           </div>
         </div>
-        <div className="rounded-2xl border border-[var(--line)] bg-[rgba(255,250,243,0.72)] p-5 shadow-sm">
-          <h3 className="display-font text-2xl font-semibold">Open questions</h3>
+        <div className="rounded-2xl border border-[var(--line)] bg-[var(--gray-soft)] p-5 ">
+          <h3 className="text-2xl font-semibold">Open questions</h3>
           <ul className="mt-4 space-y-3">
             {result.open_questions.map((question) => (
               <li key={question} className="flex gap-3 text-sm leading-6 text-[var(--muted)]">
@@ -700,10 +743,10 @@ function BrandSpecPanel({
   setBrandSpec: (brandSpec: BrandSpec) => void;
 }) {
   return (
-    <section className="rounded-2xl border border-[var(--line)] bg-[var(--paper)] p-5 shadow-sm sm:p-6">
+    <section className="rounded-2xl border border-[var(--line)] bg-[var(--lavender)] p-5 sm:p-6">
       <div className="mb-5 flex items-start justify-between gap-3">
         <div>
-          <h3 className="display-font text-2xl font-semibold">Brand spec</h3>
+          <h3 className="text-2xl font-medium">Brand spec</h3>
           <p className="mt-1 text-sm text-[var(--muted)]">
             Lumi Beauty constraints sent with each generation request.
           </p>
@@ -717,7 +760,7 @@ function BrandSpecPanel({
             onChange={(event) =>
               setBrandSpec({ ...brandSpec, voice_spec: event.target.value })
             }
-            className="min-h-24 w-full rounded-xl border border-[var(--line)] bg-white/70 px-3 py-3 text-sm leading-6 outline-none transition focus:border-[var(--clay)]"
+            className="min-h-24 w-full rounded-xl border border-[var(--line)] bg-white px-3 py-3 text-sm leading-6 outline-none transition focus:border-[var(--clay)]"
           />
         </FieldLabel>
         <FieldLabel label="Words to always use">
@@ -778,9 +821,9 @@ function GeneratorControls({
   selectedWinner?: ContentAsset;
 }) {
   return (
-    <section className="rounded-2xl border border-[var(--line)] bg-[var(--paper)] p-5 shadow-sm sm:p-6">
+    <section className="rounded-2xl border border-[var(--line)] bg-[var(--sky-soft)] p-5 sm:p-6">
       <div className="mb-5">
-        <h3 className="display-font text-2xl font-semibold">Generation brief</h3>
+        <h3 className="text-2xl font-medium">Generation brief</h3>
         <p className="mt-1 text-sm text-[var(--muted)]">
           A proven winner becomes the constraint, not a loose inspiration.
         </p>
@@ -790,7 +833,7 @@ function GeneratorControls({
           <select
             value={selectedId}
             onChange={(event) => setSelectedId(event.target.value)}
-            className="h-12 w-full rounded-xl border border-[var(--line)] bg-white/70 px-3 text-sm outline-none transition focus:border-[var(--clay)]"
+            className="h-12 w-full rounded-xl border border-[var(--line)] bg-white px-3 text-sm outline-none transition focus:border-[var(--clay)]"
           >
             {winners.map((winner) => (
               <option key={winner.id} value={winner.id}>
@@ -803,7 +846,7 @@ function GeneratorControls({
           <select
             value={placement}
             onChange={(event) => setPlacement(event.target.value)}
-            className="h-12 w-full rounded-xl border border-[var(--line)] bg-white/70 px-3 text-sm outline-none transition focus:border-[var(--clay)]"
+            className="h-12 w-full rounded-xl border border-[var(--line)] bg-white px-3 text-sm outline-none transition focus:border-[var(--clay)]"
           >
             <option>paid social</option>
             <option>product page</option>
@@ -814,7 +857,7 @@ function GeneratorControls({
           <select
             value={format}
             onChange={(event) => setFormat(event.target.value)}
-            className="h-12 w-full rounded-xl border border-[var(--line)] bg-white/70 px-3 text-sm outline-none transition focus:border-[var(--clay)]"
+            className="h-12 w-full rounded-xl border border-[var(--line)] bg-white px-3 text-sm outline-none transition focus:border-[var(--clay)]"
           >
             <option>UGC video</option>
             <option>studio video</option>
@@ -826,7 +869,7 @@ function GeneratorControls({
           <select
             value={length}
             onChange={(event) => setLength(event.target.value)}
-            className="h-12 w-full rounded-xl border border-[var(--line)] bg-white/70 px-3 text-sm outline-none transition focus:border-[var(--clay)]"
+            className="h-12 w-full rounded-xl border border-[var(--line)] bg-white px-3 text-sm outline-none transition focus:border-[var(--clay)]"
           >
             <option>under 15 seconds</option>
             <option>15 to 20 seconds</option>
@@ -841,13 +884,13 @@ function GeneratorControls({
             max={5}
             value={n}
             onChange={(event) => setN(Number(event.target.value))}
-            className="h-12 w-full rounded-xl border border-[var(--line)] bg-white/70 px-3 text-sm outline-none transition focus:border-[var(--clay)]"
+            className="h-12 w-full rounded-xl border border-[var(--line)] bg-white px-3 text-sm outline-none transition focus:border-[var(--clay)]"
           />
         </FieldLabel>
       </div>
 
       {selectedWinner ? (
-        <div className="mt-5 rounded-xl border border-[var(--line)] bg-white/50 p-4">
+        <div className="mt-5 rounded-xl border border-[var(--line)] bg-white p-4">
           <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-[var(--ink)]">
             <BadgeCheck size={16} className="text-[var(--sage)]" />
             Winning attributes
@@ -875,6 +918,11 @@ function GenerationResults({
   brandSpec: BrandSpec;
 }) {
   const threshold = 80;
+  const cardTones = [
+    "bg-[var(--lavender)]",
+    "bg-[var(--sky-soft)]",
+    "bg-[var(--sage-soft)]",
+  ];
 
   return (
     <div className="space-y-5">
@@ -909,16 +957,18 @@ function GenerationResults({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.04 }}
               className={clsx(
-                "rounded-2xl border bg-[var(--paper)] p-5 shadow-sm",
-                below ? "border-[rgba(173,93,89,0.72)]" : "border-[var(--line)]",
+                "rounded-2xl border p-5",
+                below
+                  ? "border-[rgba(180,35,24,0.45)] bg-[var(--rose-soft)]"
+                  : `border-[var(--line)] ${cardTones[index % cardTones.length]}`,
               )}
             >
               <div className="mb-4 flex items-start justify-between gap-3">
                 <div>
-                  <div className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--clay-dark)]">
+                  <div className="text-xs font-semibold text-[var(--clay-dark)]">
                     {version.hook_type}
                   </div>
-                  <h3 className="display-font mt-1 text-2xl font-semibold leading-tight">
+                  <h3 className="mt-1 text-2xl font-semibold leading-tight">
                     Version {index + 1}
                   </h3>
                 </div>
@@ -931,7 +981,7 @@ function GenerationResults({
               ) : null}
               <p className="text-sm leading-7 text-[var(--ink)]">{version.script}</p>
               <div className="mt-5">
-                <div className="mb-2 text-xs font-semibold uppercase tracking-[0.1em] text-[var(--muted)]">
+                <div className="mb-2 text-xs font-semibold text-[var(--muted)]">
                   Claims used
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -987,7 +1037,7 @@ function FieldLabel({
 }) {
   return (
     <label className="block">
-      <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.1em] text-[var(--muted)]">
+      <span className="mb-2 block text-xs font-semibold text-[var(--muted)]">
         {label}
       </span>
       {children}
@@ -1013,7 +1063,7 @@ function CommaInput({
             .filter(Boolean),
         )
       }
-      className="h-12 w-full rounded-xl border border-[var(--line)] bg-white/70 px-3 text-sm outline-none transition focus:border-[var(--clay)]"
+      className="h-12 w-full rounded-xl border border-[var(--line)] bg-white px-3 text-sm outline-none transition focus:border-[var(--clay)]"
     />
   );
 }
@@ -1046,7 +1096,7 @@ function Badge({
     amber:
       "border-[rgba(168,115,46,0.28)] bg-[var(--amber-soft)] text-[var(--amber)]",
     rose: "border-[rgba(173,93,89,0.34)] bg-[var(--rose-soft)] text-[var(--rose)]",
-    neutral: "border-[var(--line)] bg-white/55 text-[var(--muted)]",
+    neutral: "border-[var(--line)] bg-white text-[var(--muted)]",
   }[tone];
 
   return (
@@ -1075,7 +1125,7 @@ function ScoreBadge({ score }: { score: number }) {
 function LabeledText({ label, text }: { label: string; text: string }) {
   return (
     <div className="mt-5">
-      <div className="text-xs font-semibold uppercase tracking-[0.1em] text-[var(--muted)]">
+      <div className="text-xs font-semibold text-[var(--muted)]">
         {label}
       </div>
       <p className="mt-1 text-sm leading-6 text-[var(--muted)]">{text}</p>
@@ -1086,7 +1136,7 @@ function LabeledText({ label, text }: { label: string; text: string }) {
 function MiniField({ label, text }: { label: string; text: string }) {
   return (
     <div>
-      <div className="text-xs font-semibold uppercase tracking-[0.1em] text-[var(--muted)]">
+      <div className="text-xs font-semibold text-[var(--muted)]">
         {label}
       </div>
       <p className="mt-1 text-sm leading-6 text-[var(--muted)]">{text}</p>
@@ -1106,7 +1156,7 @@ function GuardrailPanel({
   return (
     <div
       className={clsx(
-        "rounded-2xl border p-5 shadow-sm",
+        "rounded-2xl border p-5 ",
         tone === "rose"
           ? "border-[rgba(173,93,89,0.34)] bg-[var(--rose-soft)]"
           : "border-[rgba(168,115,46,0.32)] bg-[var(--amber-soft)]",
@@ -1135,8 +1185,8 @@ function ErrorState({ message }: { message: string }) {
 
 function EmptyState() {
   return (
-    <div className="rounded-2xl border border-dashed border-[rgba(118,108,98,0.34)] bg-[rgba(255,250,243,0.52)] p-8 text-center">
-      <BarChart3 className="mx-auto text-[var(--clay)]" size={28} />
+    <div className="rounded-2xl border border-dashed border-[var(--line)] bg-[var(--gray-soft)] p-8 text-center">
+      <BarChart3 className="mx-auto text-[var(--ink)]" size={28} />
       <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[var(--muted)]">
         Run analysis to separate repeatable sales signals from thin or misleading
         data.
@@ -1167,7 +1217,7 @@ function GenerationSkeleton() {
 
 function SkeletonCard() {
   return (
-    <div className="rounded-2xl border border-[var(--line)] bg-[var(--paper)] p-5 shadow-sm">
+    <div className="rounded-2xl border border-[var(--line)] bg-[var(--paper)] p-5 ">
       <div className="h-4 w-24 animate-pulse rounded-full bg-[rgba(118,108,98,0.16)]" />
       <div className="mt-5 h-7 w-3/4 animate-pulse rounded-full bg-[rgba(118,108,98,0.16)]" />
       <div className="mt-6 space-y-3">

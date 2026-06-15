@@ -1,22 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  --bone: #f6f0e8;
-  --paper: #fffaf3;
+  --bone: #ffffff;
+  --paper: #ffffff;
   --paper-strong: #ffffff;
-  --ink: #27221e;
-  --muted: #766c62;
-  --line: #dfd3c5;
-  --clay: #9d5944;
-  --clay-dark: #784234;
-  --plum: #4d3140;
-  --sage: #667765;
-  --sage-soft: #e6ece3;
-  --amber: #a8732e;
-  --amber-soft: #f4ead8;
-  --rose: #ad5d59;
-  --rose-soft: #f4e2df;
-  --shadow: 0 18px 60px rgba(58, 45, 35, 0.09);
+  --ink: #18181b;
+  --muted: #5f6067;
+  --line: #e4e4e7;
+  --clay: #000000;
+  --clay-dark: #18181b;
+  --plum: #000000;
+  --sage: #15803d;
+  --sage-soft: #dcffd9;
+  --amber: #9a6400;
+  --amber-soft: #fff3c7;
+  --rose: #b42318;
+  --rose-soft: #ffe2df;
+  --lavender: #f3e4ff;
+  --sky-soft: #e5f8ff;
+  --gray-soft: #f4f4f5;
+  --shadow: 0 8px 24px rgba(24, 24, 27, 0.08);
 }
 
 * {
@@ -31,9 +34,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background:
-    linear-gradient(180deg, rgba(255, 250, 243, 0.86), rgba(246, 240, 232, 1) 32%),
-    var(--bone);
+  background: var(--bone);
   color: var(--ink);
   font-family: var(--font-sans), Arial, sans-serif;
   letter-spacing: 0;
@@ -56,16 +57,12 @@ button:disabled {
 }
 
 ::selection {
-  background: rgba(157, 89, 68, 0.18);
-}
-
-.display-font {
-  font-family: var(--font-display), Georgia, serif;
+  background: rgba(0, 0, 0, 0.12);
 }
 
 .soft-scroll {
   scrollbar-width: thin;
-  scrollbar-color: rgba(120, 66, 52, 0.38) transparent;
+  scrollbar-color: rgba(24, 24, 27, 0.32) transparent;
 }
 
 .soft-scroll::-webkit-scrollbar {
@@ -74,6 +71,6 @@ button:disabled {
 }
 
 .soft-scroll::-webkit-scrollbar-thumb {
-  background: rgba(120, 66, 52, 0.34);
+  background: rgba(24, 24, 27, 0.28);
   border-radius: 999px;
 }

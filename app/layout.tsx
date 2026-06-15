@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Heebo } from "next/font/google";
 import "./globals.css";
 
-const display = Fraunces({
-  subsets: ["latin"],
-  variable: "--font-display",
-  weight: ["500", "600", "700"],
-});
-
-const sans = Inter({
+const sans = Heebo({
   subsets: ["latin"],
   variable: "--font-sans",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -26,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${display.variable} ${sans.variable}`}>{children}</body>
+      <body className={sans.variable}>{children}</body>
     </html>
   );
 }
