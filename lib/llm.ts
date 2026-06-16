@@ -99,8 +99,9 @@ async function callOpenRouter({
     headers: {
       Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
       "Content-Type": "application/json",
-      "HTTP-Referer": process.env.SIGNAL_SITE_URL || "https://signal-demo.local",
-      "X-Title": "Signal Demo",
+      "HTTP-Referer":
+        process.env.WORKBENCH_SITE_URL || "https://tolstoy-workbench.local",
+      "X-Title": "Tolstoy Account Workbench",
     },
     body: JSON.stringify({
       model: DEFAULT_OPENROUTER_MODEL,

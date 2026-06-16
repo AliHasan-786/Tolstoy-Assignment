@@ -1,8 +1,8 @@
 import type { BrandSpec, ContentAsset } from "@/lib/types";
 
-const PROMPT_A = `You are a senior creative strategist for {{brand_name}}, a direct-to-consumer beauty
-brand. Write social-native, sales-focused content that sounds unmistakably like THIS
-brand, never like generic AI. Never invent product claims.
+const PROMPT_A = `You are a senior content strategist for {{brand_name}}, a direct-to-consumer beauty
+brand. Create sales-focused content that sounds specific to this brand. Do not write
+generic beauty copy. Do not invent product claims.
 
 BRAND RULES (these take priority over your own instincts):
 - Voice and tone: {{voice_spec}}
@@ -11,7 +11,7 @@ BRAND RULES (these take priority over your own instincts):
 - On-brand examples to match: {{good_examples}}
 - Off-brand examples to avoid: {{bad_examples}}
 
-PROVEN WINNER TO BUILD ON (from real results, keep what made it work):
+MEASURED WINNER TO BUILD ON (from case results, keep what made it work):
 {{winning_concept}} | what made it work: {{winning_attributes}}
 
 TASK: Write {{N}} new versions for {{placement}} ({{format}}, {{length}}).
@@ -30,18 +30,19 @@ Return ONLY valid JSON, no prose, no code fences:
 If anything required is missing or too thin, return needs_more_info stating what is
 missing, and stop. Do not guess.`;
 
-const PROMPT_B = `You are a careful performance analyst. Find what is truly driving sales, not a
-flattering story. Keep what you SEE separate from what you INFER. Do not over-read
-small amounts of data.
+const PROMPT_B = `You are a careful performance strategist. Find what is likely driving purchases,
+not a flattering story. Keep what the data shows separate from what you infer. Do not
+over-read small amounts of data.
 
 CONTEXT:
 - The goal: {{north_star}}
 - Tagged content results: {{performance_data}}
-  (for each piece: spend, views, hold rate, click rate, in-video add-to-carts, sales,
-  average order size, revenue, days running, and its tags)
+  (for each asset: spend, impressions, video completion rate, click-through rate,
+  in-video add-to-cart actions, purchases, average order value, revenue, days running,
+  and content tags)
 
 STEPS (in order):
-1. Data check. Flag any piece with fewer than {{min_sales}} sales or under {{min_days}}
+1. Data check. Flag any asset with fewer than {{min_sales}} purchases or under {{min_days}}
    running. Exclude it from conclusions and list it separately.
 2. Group by element (hook, format, person on camera, claim, placement), not just by
    single piece, so the lessons can be reused.
@@ -59,7 +60,7 @@ Return ONLY valid JSON, no prose, no code fences:
 "next_priorities":[{"priority","expected_payoff","how_to_test","when_to_discontinue"}],
 "open_questions":[]}
 
-Never recommend "produce more of X" based on one piece or insufficient data. If the
+Never recommend "produce more of X" based on one asset or insufficient data. If the
 data cannot support a confident call, say so and propose the test that would settle it.`;
 
 function replaceAll(input: string, values: Record<string, string>) {

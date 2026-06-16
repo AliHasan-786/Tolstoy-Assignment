@@ -9,9 +9,9 @@ const sans = Heebo({
 });
 
 export const metadata: Metadata = {
-  title: "Signal | AI Content-to-Sales Prototype",
+  title: "Tolstoy Account Workbench",
   description:
-    "Measure what content drives sales, then generate more of what works, on-brand.",
+    "A seeded case workflow for measuring content-to-sales signals before guarded AI generation.",
 };
 
 export default function RootLayout({

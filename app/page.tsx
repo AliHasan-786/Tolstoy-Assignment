@@ -1,9 +1,9 @@
-import { SignalApp } from "@/components/signal-app";
+import { AccountWorkbench } from "@/components/account-workbench";
 
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <SignalApp />
+      <AccountWorkbench />
     </main>
   );
 }

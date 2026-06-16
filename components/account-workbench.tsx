@@ -49,7 +49,7 @@ const percent = new Intl.NumberFormat("en-US", {
 
 type Tab = "loop" | "engine";
 
-export function SignalApp() {
+export function AccountWorkbench() {
   const [activeTab, setActiveTab] = useState<Tab>("loop");
 
   return (
@@ -93,12 +93,12 @@ function TopBar() {
           <span className="h-3.5 w-3.5 rounded-full bg-black" />
         </div>
         <span className="text-xl font-bold leading-none text-[var(--ink)]">
-          Signal
+          Tolstoy account workbench
         </span>
       </div>
       <div className="hidden items-center gap-2 sm:flex">
         <span className="rounded-full bg-[var(--gray-soft)] px-4 py-2 text-sm font-medium text-[var(--ink)]">
-          Lumi workspace
+          Seeded beauty case
         </span>
       </div>
     </header>
@@ -111,19 +111,19 @@ function Hero() {
       <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
         <div className="max-w-3xl">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-[var(--gray-soft)] px-4 py-2 text-sm font-medium text-[var(--ink)] sm:hidden">
-            Lumi workspace
+            Seeded beauty case
           </div>
           <h1 className="max-w-4xl text-5xl font-normal leading-[1.05] text-[var(--ink)] sm:text-6xl lg:text-[76px]">
-            Know what sells before you make more.
+            Measurement before generation.
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-7 text-[var(--ink)] sm:text-xl">
-            Track which content elements drive revenue, then turn proven winners
-            into on-brand variations.
+            A working version of the strategy: connect content elements to
+            purchases, then generate only from proven patterns and approved claims.
           </p>
         </div>
         <div className="grid w-full grid-cols-3 gap-3 md:max-w-[390px]">
-          <StatTile label="Assets" value="14" tone="lavender" />
-          <StatTile label="Sales" value="4.7k" tone="sky" />
+          <StatTile label="Tagged assets" value="14" tone="lavender" />
+          <StatTile label="Purchases" value="4,652" tone="sky" />
           <StatTile label="Revenue" value="$250k" tone="sage" />
         </div>
       </div>
@@ -174,7 +174,7 @@ function TabSwitcher({
         )}
       >
         <BarChart3 size={17} />
-        The Loop
+        Measure
       </button>
       <button
         type="button"
@@ -187,7 +187,7 @@ function TabSwitcher({
         )}
       >
         <FlaskConical size={17} />
-        The Engine
+        Generate
       </button>
     </div>
   );
@@ -228,8 +228,8 @@ function LoopTab() {
   return (
     <div className="space-y-7">
       <SectionHeader
-        eyebrow="Measurement layer"
-        title="Which content elements actually drive sales, and what to make next."
+        eyebrow="Step 1: measurement"
+        title="Find repeatable sales signals before recommending new content."
         action={
           <PrimaryButton onClick={runAnalysis} disabled={loading}>
             {loading ? <Loader2 className="animate-spin" size={18} /> : <TrendingUp size={18} />}
@@ -306,8 +306,8 @@ function EngineTab() {
   return (
     <div className="space-y-7">
       <SectionHeader
-        eyebrow="Generation layer"
-        title="Turn a proven winner into new on-brand variations, with a guardrail."
+        eyebrow="Step 2: guarded generation"
+        title="Generate from a measured winner, inside brand and claim constraints."
         action={
           <PrimaryButton onClick={generate} disabled={loading}>
             {loading ? (
@@ -399,13 +399,13 @@ function PerformanceTable() {
     <section className="min-w-0 self-start overflow-hidden rounded-[18px] border border-[var(--line)] bg-white">
       <div className="flex items-center justify-between gap-3 border-b border-[var(--line)] px-4 py-4 sm:px-5">
         <div>
-          <h3 className="text-xl font-medium sm:text-2xl">Performance overview</h3>
+          <h3 className="text-xl font-medium sm:text-2xl">Tagged content assets</h3>
           <p className="mt-1 text-sm text-[var(--muted)]">
-            Seed content assets with spend, sales, and revenue signals.
+            Seeded case data with spend, attributed purchases, revenue, and sample thresholds.
           </p>
         </div>
         <div className="hidden rounded-full border border-[var(--line)] px-3 py-1 text-xs font-medium text-[var(--muted)] sm:block">
-          Min sample: {minSales} sales / {minDays} days
+          Minimum sample: {minSales} purchases / {minDays} days
         </div>
       </div>
       <div className="soft-scroll max-h-[560px] overflow-auto">
@@ -414,7 +414,7 @@ function PerformanceTable() {
             <tr>
               <Th>Asset</Th>
               <Th>Type</Th>
-              <Th>Signal</Th>
+              <Th>Content signal</Th>
               <Th align="right">Spend</Th>
               <Th align="right">Revenue</Th>
               <Th align="right">Sample</Th>
@@ -446,7 +446,7 @@ function PerformanceTable() {
                   </Td>
                   <Td>
                     <div className="font-medium text-[var(--ink)]">
-                      {asset.format}
+                      {displayFormat(asset.format)}
                     </div>
                     <div className="mt-1 text-xs text-[var(--muted)]">
                       {asset.person} / {asset.placement}
@@ -479,7 +479,7 @@ function PerformanceTable() {
                   </Td>
                   <Td align="right">
                     <div className="font-medium text-[var(--ink)]">
-                      {asset.attributed_sales} sales
+                      {asset.attributed_sales} purchases
                     </div>
                     <div className="mt-1 text-xs text-[var(--muted)]">
                       {asset.days_live} days
@@ -594,7 +594,7 @@ function RevenueChartPanel() {
     <section className="h-fit min-w-0 self-start rounded-[18px] border border-[var(--line)] bg-[var(--sky-soft)] p-5">
       <div className="mb-5 flex items-start justify-between gap-3">
         <div>
-          <h3 className="text-2xl font-medium">Revenue rank</h3>
+          <h3 className="text-2xl font-medium">Revenue by asset</h3>
           <p className="mt-1 text-sm text-[var(--muted)]">
             Top assets by attributed revenue.
           </p>
@@ -628,8 +628,10 @@ function RevenueChartPanel() {
             <Tooltip
               cursor={{ fill: "rgba(24,24,27,0.06)" }}
               formatter={(value, name) => [
-                name === "roas" ? `${value}x` : currency.format(Number(value)),
-                name === "roas" ? "ROAS" : "Revenue",
+                name === "roas"
+                  ? `${value} revenue per dollar`
+                  : currency.format(Number(value)),
+                name === "roas" ? "Revenue per dollar" : "Revenue",
               ]}
               contentStyle={{
                 border: "1px solid var(--line)",
@@ -761,7 +763,7 @@ function BrandSpecPanel({
         <div>
           <h3 className="text-2xl font-medium">Brand spec</h3>
           <p className="mt-1 text-sm text-[var(--muted)]">
-            Lumi Beauty constraints sent with each generation request.
+            Case brand constraints sent with each generation request.
           </p>
         </div>
         <LockKeyhole className="text-[var(--clay)]" size={20} />
@@ -842,7 +844,7 @@ function GeneratorControls({
         </p>
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
-        <FieldLabel label="Proven winner">
+        <FieldLabel label="Measured winner">
           <select
             value={selectedId}
             onChange={(event) => setSelectedId(event.target.value)}
@@ -906,7 +908,7 @@ function GeneratorControls({
         <div className="mt-5 rounded-xl border border-[var(--line)] bg-white p-4">
           <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-[var(--ink)]">
             <BadgeCheck size={16} className="text-[var(--sage)]" />
-            Winning attributes
+            Preserved winner elements
           </div>
           <div className="flex flex-wrap gap-2">
             {describeWinner(selectedWinner)
@@ -989,7 +991,7 @@ function GenerationResults({
               </div>
               {below ? (
                 <div className="mb-4 rounded-xl border border-[rgba(173,93,89,0.36)] bg-[var(--rose-soft)] px-3 py-2 text-sm font-semibold text-[var(--rose)]">
-                  Below brand bar - do not ship.
+                  Below brand bar. Do not ship.
                 </div>
               ) : null}
               <p className="text-sm leading-7 text-[var(--ink)]">{version.script}</p>
@@ -1034,8 +1036,10 @@ function ModeIndicator({
       >
         <span className="h-1.5 w-1.5 rounded-full bg-current" />
         {result.mode === "mock"
-          ? "demo mode"
-          : `live${result.provider ? ` via ${result.provider}` : ""}`}
+          ? "seeded fallback"
+          : result.provider === "anthropic"
+            ? "Claude live run"
+            : `live${result.provider ? ` via ${result.provider}` : ""}`}
       </div>
     </div>
   );
@@ -1201,7 +1205,7 @@ function EmptyState() {
     <div className="rounded-2xl border border-dashed border-[var(--line)] bg-[var(--gray-soft)] p-8 text-center">
       <BarChart3 className="mx-auto text-[var(--ink)]" size={28} />
       <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[var(--muted)]">
-        Run analysis to separate repeatable sales signals from thin or misleading
+        Run analysis to separate repeatable purchase signals from thin or misleading
         data.
       </p>
     </div>
@@ -1250,7 +1254,7 @@ function describeWinner(asset: ContentAsset) {
     `${asset.person} on camera`,
     asset.claim,
     `${currency.format(asset.attributed_revenue)} revenue`,
-    `${percent.format(asset.hold_rate)} hold rate`,
+    `${percent.format(asset.hold_rate)} video completion rate`,
   ].join(", ");
 }
 
@@ -1269,4 +1273,11 @@ function assetThumbLabel(asset: ContentAsset) {
   if (asset.format === "studio video") return "VID";
   if (asset.format === "static image") return "IMG";
   return "CAR";
+}
+
+function displayFormat(format: ContentAsset["format"]) {
+  if (format === "UGC video") return "Creator-style video";
+  if (format === "studio video") return "Studio video";
+  if (format === "static image") return "Static image";
+  return "Carousel";
 }

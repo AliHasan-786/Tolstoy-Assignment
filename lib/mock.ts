@@ -5,22 +5,22 @@ export const mockAnalysis: AnalyzeResult = {
     {
       asset: "Derm edit - barrier serum teaser",
       reason:
-        "Only 38 attributed sales and 3 days live, below the 50-sale and 5-day thresholds despite strong early revenue per day.",
+        "Only 38 attributed purchases and 3 days live, below the 50-purchase and 5-day thresholds despite strong early revenue per day.",
     },
     {
       asset: "Creator quick quote - clinical test",
       reason:
-        "Only 27 attributed sales, so it is excluded from conclusions until it has a larger sales sample.",
+        "Only 27 attributed purchases, so it is excluded from conclusions until it has a larger purchase sample.",
     },
   ],
   winning_elements: [
     {
-      element: "Founder-to-camera UGC videos under 15 seconds",
+      element: "Founder-to-camera videos under 15 seconds",
       evidence:
-        "Four qualifying founder UGC videos generated $175.6k in attributed revenue on $60.9k spend, with hold rates from 41% to 46%.",
+        "Four qualifying founder-led creator-style videos generated $175.6k in attributed revenue on $60.9k spend, with video completion rates from 41% to 46%.",
       confidence: "High",
       inferred_why:
-        "Inference: the founder format makes the routine feel guided and credible, while short lengths keep attention high enough to move viewers to add-to-cart.",
+        "Inference: the founder format makes the routine feel guided and credible, while short lengths keep attention high enough to move viewers toward add-to-cart.",
       false_explanations_checked:
         "Not explained by budget alone: this cluster also has the strongest revenue per dollar spent. Not explained by recency: the assets ran 19 to 28 days.",
     },
@@ -37,7 +37,7 @@ export const mockAnalysis: AnalyzeResult = {
     {
       element: "Paid social as the main learning surface",
       evidence:
-        "The strongest reusable signals come from paid social assets with enough spend, days live, and sales volume for comparison.",
+        "The strongest reusable signals come from paid social assets with enough spend, days live, and purchase volume for comparison.",
       confidence: "Medium",
       inferred_why:
         "Inference: paid social gives faster feedback on opening hook, claim, and creator format than product page or email placements.",
@@ -48,13 +48,13 @@ export const mockAnalysis: AnalyzeResult = {
   next_priorities: [
     {
       priority:
-        "Launch three new founder-to-camera UGC cuts around the barrier routine",
+        "Launch three new founder-to-camera video cuts around the barrier routine",
       expected_payoff:
         "Highest expected payoff because it extends the strongest multi-asset pattern rather than a single winner.",
       how_to_test:
-        "Run against the current founder routine control with equal spend and the same audience. Compare revenue per dollar, in-video add-to-cart, and hold rate after at least 50 sales per cell.",
+        "Run against the current founder routine control with equal spend and the same audience. Compare revenue per dollar, in-video add-to-cart actions, and video completion rate after at least 50 purchases per cell.",
       when_to_discontinue:
-        "Pause any cut that is 20% below the control on revenue per dollar after 50 attributed sales and 5 days live.",
+        "Pause any cut that is 20% below the control on revenue per dollar after 50 attributed purchases and 5 days live.",
     },
     {
       priority:
@@ -68,13 +68,13 @@ export const mockAnalysis: AnalyzeResult = {
     },
     {
       priority:
-        "Convert the customer quote format into shorter UGC cuts",
+        "Convert the customer quote format into shorter creator-style videos",
       expected_payoff:
-        "Moderate upside: customer proof works, but the current examples are longer and less efficient than founder UGC.",
+        "Moderate upside: customer proof works, but the current examples are longer and less efficient than founder-led video.",
       how_to_test:
         "Run 9 to 12 second customer quote cuts against the existing 18 second version. Hold claim and audience constant.",
       when_to_discontinue:
-        "Stop if shorter quote cuts do not improve hold rate by at least 10% while maintaining revenue per dollar.",
+        "Stop if shorter quote cuts do not improve video completion rate by at least 10% while maintaining revenue per dollar.",
     },
     {
       priority:
@@ -82,7 +82,7 @@ export const mockAnalysis: AnalyzeResult = {
       expected_payoff:
         "Protects spend by moving away from the weakest asset class in the sample.",
       how_to_test:
-        "Take the two static concepts and recreate each as a founder-led or product-demo UGC video. Compare against static controls.",
+        "Take the two static concepts and recreate each as a founder-led or product-demo video. Compare against static controls.",
       when_to_discontinue:
         "Stop static scaling if video versions beat static controls by 25% or more on revenue per dollar.",
     },
@@ -108,7 +108,7 @@ export function mockGeneration(n: number): GenerateResult {
       reason:
         "Calm, specific, and proof-led without promising more than the approved claims support.",
       what_it_kept:
-        "Founder-led routine framing, short UGC pacing, and a barrier-focused claim.",
+        "Founder-led routine framing, short video pacing, and a barrier-focused claim.",
     },
     {
       hook_type: "problem-then-fix",

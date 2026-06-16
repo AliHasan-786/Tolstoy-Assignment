@@ -1,13 +1,14 @@
-# Signal
+# Tolstoy Account Workbench
 
-Signal is a polished AI content-to-sales prototype for a fictional DTC skincare brand, Lumi Beauty. It demonstrates a simple workflow: measure which content elements actually drive attributed sales, then generate more on-brand variations from the winners.
+This is an optional support artifact for the Tolstoy AI Strategist assignment. It is intentionally narrow: it turns the written recommendation into a small working workflow for a fictional direct-to-consumer beauty account.
 
-The app has two tabs:
+It is not meant to look like a finished Tolstoy product. It is meant to show the operating logic:
 
-- **The Loop** analyzes tagged sample performance data and returns reusable winning elements, next tests, and low-sample exclusions.
-- **The Engine** turns a proven winner and brand spec into guarded, on-brand content variations.
+1. Measure tagged content assets against purchase and revenue outcomes.
+2. Exclude low-sample results before drawing conclusions.
+3. Generate new content only from measured winners and approved brand claims.
 
-The demo uses sample data only and is designed to stay functional even without an LLM key by falling back to realistic mock responses.
+The app uses seeded case data because no real client data was provided. With an Anthropic key, the two server routes call Claude. Without a key, the app falls back to deterministic seeded responses so the workflow remains reviewable.
 
 ## Run locally
 
@@ -20,13 +21,6 @@ Open `http://localhost:3000`.
 
 ## LLM setup
 
-Signal has two runtime modes:
-
-- **Live mode:** set an LLM key and the server routes call the model in real time.
-- **Demo mode:** leave keys unset and the same workflows return realistic mock output.
-
-The UI uses the included sample dataset in both modes. The difference is whether the analysis and generation are produced by the live model or by the fallback response.
-
 Create `.env.local`:
 
 ```bash
@@ -36,7 +30,7 @@ ANTHROPIC_MODEL=claude-sonnet-4-6
 
 `ANTHROPIC_MODEL` is optional. The app defaults to `claude-sonnet-4-6`. Anthropic calls are made only from server-side API routes, so the key never reaches the browser.
 
-The server also supports OpenRouter as an optional provider alternative when no Anthropic key is set:
+The server also supports OpenRouter as an optional fallback provider when no Anthropic key is set:
 
 ```bash
 OPENROUTER_API_KEY=your_openrouter_key
@@ -45,14 +39,13 @@ OPENROUTER_MODEL=google/gemini-2.5-flash
 
 If both keys are set, Anthropic is used first.
 
-If no key is set, if a provider call fails, or if JSON parsing fails after one retry, the app returns realistic mock data and shows a subtle demo-mode indicator.
-
 ## Vercel deploy
 
-1. Push this repository to GitHub.
-2. Import the repo in Vercel.
-3. Add `ANTHROPIC_API_KEY` in Vercel project settings.
-4. Optionally add `ANTHROPIC_MODEL`.
-5. Deploy.
+In the Vercel project settings, add:
 
-No database, auth, or additional configuration is required.
+```bash
+ANTHROPIC_API_KEY=your_anthropic_key
+ANTHROPIC_MODEL=claude-sonnet-4-6
+```
+
+Then redeploy the latest commit. No database, authentication, or additional configuration is required.
