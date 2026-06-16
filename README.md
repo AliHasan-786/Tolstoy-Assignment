@@ -2,6 +2,8 @@
 
 This is an optional support artifact for the Tolstoy AI Strategist assignment. It is intentionally narrow: it turns the written recommendation into a small working workflow for a fictional direct-to-consumer beauty account.
 
+Access here: https://tolstoy-assignment.vercel.app/
+
 It is meant to show the operating logic:
 
 1. Measure tagged content assets against purchase and revenue outcomes.
