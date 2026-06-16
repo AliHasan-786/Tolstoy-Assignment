@@ -53,7 +53,7 @@ export function SignalApp() {
   const [activeTab, setActiveTab] = useState<Tab>("loop");
 
   return (
-    <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-8 px-4 py-5 sm:px-6 sm:py-7 lg:px-8">
+    <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-7 px-4 py-5 sm:px-6 sm:py-7 lg:px-8">
       <TopBar />
       <Hero />
       <TabSwitcher activeTab={activeTab} onChange={setActiveTab} />
@@ -98,7 +98,7 @@ function TopBar() {
       </div>
       <div className="hidden items-center gap-2 sm:flex">
         <span className="rounded-full bg-[var(--gray-soft)] px-4 py-2 text-sm font-medium text-[var(--ink)]">
-          Prototype · sample data
+          Lumi workspace
         </span>
       </div>
     </header>
@@ -111,14 +111,14 @@ function Hero() {
       <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
         <div className="max-w-3xl">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-[var(--gray-soft)] px-4 py-2 text-sm font-medium text-[var(--ink)] sm:hidden">
-            Prototype &middot; sample data
+            Lumi workspace
           </div>
           <h1 className="max-w-4xl text-5xl font-normal leading-[1.05] text-[var(--ink)] sm:text-6xl lg:text-[76px]">
-            Measure sales signals before you make more content.
+            Know what sells before you make more.
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-7 text-[var(--ink)] sm:text-xl">
-            Measure what content drives sales, then generate more of what works,
-            on-brand.
+            Track which content elements drive revenue, then turn proven winners
+            into on-brand variations.
           </p>
         </div>
         <div className="grid w-full grid-cols-3 gap-3 md:max-w-[390px]">
@@ -238,7 +238,7 @@ function LoopTab() {
         }
       />
 
-      <div className="grid min-w-0 gap-5 xl:grid-cols-[1.25fr_0.75fr]">
+      <div className="grid min-w-0 items-start gap-5 xl:grid-cols-[minmax(0,1.35fr)_minmax(320px,0.65fr)]">
         <PerformanceTable />
         <RevenueChartPanel />
       </div>
@@ -320,7 +320,7 @@ function EngineTab() {
         }
       />
 
-      <div className="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+      <div className="grid items-start gap-5 lg:grid-cols-[0.9fr_1.1fr]">
         <BrandSpecPanel brandSpec={brandSpec} setBrandSpec={setBrandSpec} />
         <GeneratorControls
           winners={winners}
@@ -355,7 +355,7 @@ function SectionHeader({
   action: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-4 rounded-2xl border border-[var(--line)] bg-[var(--gray-soft)] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+    <div className="flex flex-col gap-4 rounded-[18px] border border-[var(--line)] bg-[var(--gray-soft)] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
       <div>
         <div className="text-sm font-medium text-[var(--muted)]">
           {eyebrow}
@@ -396,10 +396,10 @@ function PerformanceTable() {
   );
 
   return (
-    <section className="min-w-0 overflow-hidden rounded-2xl border border-[var(--line)] bg-white">
-      <div className="flex items-center justify-between gap-3 border-b border-[var(--line)] px-5 py-4">
+    <section className="min-w-0 self-start overflow-hidden rounded-[18px] border border-[var(--line)] bg-white">
+      <div className="flex items-center justify-between gap-3 border-b border-[var(--line)] px-4 py-4 sm:px-5">
         <div>
-          <h3 className="text-2xl font-medium">Performance overview</h3>
+          <h3 className="text-xl font-medium sm:text-2xl">Performance overview</h3>
           <p className="mt-1 text-sm text-[var(--muted)]">
             Seed content assets with spend, sales, and revenue signals.
           </p>
@@ -408,20 +408,16 @@ function PerformanceTable() {
           Min sample: {minSales} sales / {minDays} days
         </div>
       </div>
-      <div className="soft-scroll overflow-x-auto">
-        <table className="min-w-[1060px] w-full border-collapse text-left text-sm">
-          <thead className="bg-[var(--gray-soft)] text-xs text-[var(--muted)]">
+      <div className="soft-scroll max-h-[560px] overflow-auto">
+        <table className="min-w-[720px] w-full border-collapse text-left text-[13px]">
+          <thead className="sticky top-0 z-10 bg-[var(--gray-soft)] text-xs text-[var(--muted)] shadow-[inset_0_-1px_0_var(--line)]">
             <tr>
               <Th>Asset</Th>
-              <Th>Format</Th>
-              <Th>Hook</Th>
-              <Th>Person</Th>
-              <Th>Claim</Th>
-              <Th>Placement</Th>
+              <Th>Type</Th>
+              <Th>Signal</Th>
               <Th align="right">Spend</Th>
               <Th align="right">Revenue</Th>
-              <Th align="right">Sales</Th>
-              <Th align="right">Days</Th>
+              <Th align="right">Sample</Th>
             </tr>
           </thead>
           <tbody>
@@ -433,33 +429,41 @@ function PerformanceTable() {
               return (
                 <tr
                   key={asset.id}
-                  className="border-t border-[var(--line)]"
+                  className="border-t border-[var(--line)] transition hover:bg-[var(--gray-soft)]/55"
                 >
                   <Td>
                     <div className="flex items-center gap-3">
                       <Thumb asset={asset} />
-                      <div>
-                        <div className="font-semibold text-[var(--ink)]">
+                      <div className="min-w-0">
+                        <div className="max-w-[210px] font-semibold leading-snug text-[var(--ink)]">
                           {asset.label}
                         </div>
                         <div className="mt-1 text-xs text-[var(--muted)]">
-                          {asset.length_seconds
-                            ? `${asset.length_seconds}s`
-                            : "non-video"}
-                          {lowData ? " - low sample" : weak ? " - underperformer" : ""}
+                          {assetMeta(asset, lowData, weak)}
                         </div>
                       </div>
                     </div>
                   </Td>
-                  <Td>{asset.format}</Td>
-                  <Td>{asset.hook_type}</Td>
-                  <Td>{asset.person}</Td>
-                  <Td>{asset.claim}</Td>
-                  <Td>{asset.placement}</Td>
+                  <Td>
+                    <div className="font-medium text-[var(--ink)]">
+                      {asset.format}
+                    </div>
+                    <div className="mt-1 text-xs text-[var(--muted)]">
+                      {asset.person} / {asset.placement}
+                    </div>
+                  </Td>
+                  <Td>
+                    <div className="font-medium text-[var(--ink)]">
+                      {asset.hook_type}
+                    </div>
+                    <div className="mt-1 max-w-[170px] text-xs leading-5 text-[var(--muted)]">
+                      {asset.claim}
+                    </div>
+                  </Td>
                   <Td align="right">{currency.format(asset.spend)}</Td>
                   <Td align="right">
-                    <div className="flex min-w-32 items-center justify-end gap-3">
-                      <div className="h-2 w-20 rounded-full bg-[var(--gray-soft)]">
+                    <div className="flex min-w-28 items-center justify-end gap-3">
+                      <div className="h-2 w-16 rounded-full bg-[var(--gray-soft)]">
                         <div
                           className="h-2 rounded-full bg-black"
                           style={{
@@ -473,8 +477,14 @@ function PerformanceTable() {
                       <span>{currency.format(asset.attributed_revenue)}</span>
                     </div>
                   </Td>
-                  <Td align="right">{asset.attributed_sales}</Td>
-                  <Td align="right">{asset.days_live}</Td>
+                  <Td align="right">
+                    <div className="font-medium text-[var(--ink)]">
+                      {asset.attributed_sales} sales
+                    </div>
+                    <div className="mt-1 text-xs text-[var(--muted)]">
+                      {asset.days_live} days
+                    </div>
+                  </Td>
                 </tr>
               );
             })}
@@ -494,7 +504,10 @@ function Th({
 }) {
   return (
     <th
-      className={clsx("px-4 py-3 font-semibold", align === "right" && "text-right")}
+      className={clsx(
+        "px-3 py-2.5 font-semibold",
+        align === "right" && "text-right",
+      )}
     >
       {children}
     </th>
@@ -511,7 +524,7 @@ function Td({
   return (
     <td
       className={clsx(
-        "px-4 py-4 align-middle text-[var(--muted)]",
+        "px-3 py-3 align-middle text-[var(--muted)]",
         align === "right" && "text-right tabular-nums",
       )}
     >
@@ -531,11 +544,11 @@ function Thumb({ asset }: { asset: ContentAsset }) {
   return (
     <div
       className={clsx(
-        "flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/70 text-xs font-bold ",
+        "flex h-10 w-10 shrink-0 items-center justify-center rounded-[14px] border border-white/70 text-xs font-bold",
         tone,
       )}
     >
-      {asset.format === "UGC video" ? "UGC" : asset.format.slice(0, 3)}
+      {assetThumbLabel(asset)}
     </div>
   );
 }
@@ -578,7 +591,7 @@ function RevenueChartPanel() {
   }, []);
 
   return (
-    <section className="min-w-0 rounded-2xl border border-[var(--line)] bg-[var(--sky-soft)] p-5">
+    <section className="h-fit min-w-0 self-start rounded-[18px] border border-[var(--line)] bg-[var(--sky-soft)] p-5">
       <div className="mb-5 flex items-start justify-between gap-3">
         <div>
           <h3 className="text-2xl font-medium">Revenue rank</h3>
@@ -587,12 +600,12 @@ function RevenueChartPanel() {
           </p>
         </div>
       </div>
-      <div ref={chartRef} className="h-[360px] w-full overflow-hidden">
+      <div ref={chartRef} className="h-[330px] w-full overflow-hidden">
         {mounted && chartWidth > 0 ? (
           <BarChart
             data={chartData}
             width={chartWidth}
-            height={360}
+            height={330}
             layout="vertical"
             margin={{ left: 8, right: 16 }}
           >
@@ -1239,4 +1252,21 @@ function describeWinner(asset: ContentAsset) {
     `${currency.format(asset.attributed_revenue)} revenue`,
     `${percent.format(asset.hold_rate)} hold rate`,
   ].join(", ");
+}
+
+function assetMeta(asset: ContentAsset, lowData: boolean, weak: boolean) {
+  const details = [asset.length_seconds ? `${asset.length_seconds}s` : "non-video"];
+  if (lowData) {
+    details.push("low sample");
+  } else if (weak) {
+    details.push("underperformer");
+  }
+  return details.join(" / ");
+}
+
+function assetThumbLabel(asset: ContentAsset) {
+  if (asset.format === "UGC video") return "UGC";
+  if (asset.format === "studio video") return "VID";
+  if (asset.format === "static image") return "IMG";
+  return "CAR";
 }
