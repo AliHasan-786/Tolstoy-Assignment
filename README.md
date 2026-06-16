@@ -30,18 +30,20 @@ The UI uses the included sample dataset in both modes. The difference is whether
 Create `.env.local`:
 
 ```bash
+ANTHROPIC_API_KEY=your_anthropic_key
+ANTHROPIC_MODEL=claude-sonnet-4-6
+```
+
+`ANTHROPIC_MODEL` is optional. The app defaults to `claude-sonnet-4-6`. Anthropic calls are made only from server-side API routes, so the key never reaches the browser.
+
+The server also supports OpenRouter as an optional provider alternative when no Anthropic key is set:
+
+```bash
 OPENROUTER_API_KEY=your_openrouter_key
 OPENROUTER_MODEL=google/gemini-2.5-flash
 ```
 
-`OPENROUTER_MODEL` is optional. The app defaults to `google/gemini-2.5-flash`, a strong low-cost OpenRouter model. OpenRouter calls are made only from server-side API routes, so the key never reaches the browser.
-
-For local demos, the server also supports an optional Anthropic fallback:
-
-```bash
-ANTHROPIC_API_KEY=your_anthropic_key
-ANTHROPIC_MODEL=claude-sonnet-4-6
-```
+If both keys are set, Anthropic is used first.
 
 If no key is set, if a provider call fails, or if JSON parsing fails after one retry, the app returns realistic mock data and shows a subtle demo-mode indicator.
 
@@ -49,8 +51,8 @@ If no key is set, if a provider call fails, or if JSON parsing fails after one r
 
 1. Push this repository to GitHub.
 2. Import the repo in Vercel.
-3. Add `OPENROUTER_API_KEY` in Vercel project settings.
-4. Optionally add `OPENROUTER_MODEL`.
+3. Add `ANTHROPIC_API_KEY` in Vercel project settings.
+4. Optionally add `ANTHROPIC_MODEL`.
 5. Deploy.
 
 No database, auth, or additional configuration is required.

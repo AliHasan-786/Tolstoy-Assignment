@@ -72,12 +72,12 @@ export async function completeJson<T>({
 }
 
 function chooseProvider(): Provider | undefined {
-  if (process.env.OPENROUTER_API_KEY) {
-    return "openrouter";
-  }
-
   if (process.env.ANTHROPIC_API_KEY) {
     return "anthropic";
+  }
+
+  if (process.env.OPENROUTER_API_KEY) {
+    return "openrouter";
   }
 
   return undefined;
